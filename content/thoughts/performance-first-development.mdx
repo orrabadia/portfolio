@@ -1,0 +1,65 @@
+---
+title: "Performance-First Development"
+excerpt: "Why performance should be a first-class citizen in your development workflow."
+date: "2024-10-10"
+readTime: "6 min"
+---
+
+Performance isn't something you can bolt on at the end of a project. It needs to be considered from day one.
+
+## Measuring What Matters
+
+Core Web Vitals have given us standardized metrics to measure user experience. Understanding these is crucial for modern web development.
+
+### The Core Metrics
+
+- **LCP (Largest Contentful Paint)** - How quickly the main content loads
+- **INP (Interaction to Next Paint)** - How responsive the page feels
+- **CLS (Cumulative Layout Shift)** - Visual stability of the page
+
+| Metric | Good | Needs Improvement | Poor |
+|--------|------|-------------------|------|
+| LCP | ≤2.5s | ≤4.0s | >4.0s |
+| INP | ≤200ms | ≤500ms | >500ms |
+| CLS | ≤0.1 | ≤0.25 | >0.25 |
+
+## Building Performance into Your Workflow
+
+From code review checklists to automated performance budgets, there are many ways to make performance a natural part of your development process.
+
+### Performance Budget Example
+
+```javascript
+// performance-budget.json
+{
+  "bundles": {
+    "main": "150kb",
+    "vendor": "100kb"
+  },
+  "metrics": {
+    "lcp": "2500ms",
+    "cls": "0.1"
+  }
+}
+```
+
+### Code Review Checklist
+
+Before merging any PR, ask:
+
+1. Are images optimized and properly sized?
+2. Is JavaScript being loaded efficiently?
+3. Are we avoiding layout shifts?
+4. Have we tested on slow connections?
+
+## The Business Case
+
+Performance directly impacts business metrics. The data is clear:
+
+- **53%** of mobile users abandon sites that take over 3 seconds to load
+- **1 second** delay in page response can result in 7% reduction in conversions
+- Google uses page experience as a ranking factor
+
+> Performance is not just a technical concern—it's a business imperative.
+
+Investing in performance pays dividends in user satisfaction, conversion rates, and search rankings.
