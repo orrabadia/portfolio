@@ -30,12 +30,10 @@ export default function ThoughtsPage() {
                 <article className="group p-6 sm:p-8 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-500 hover:shadow-lg cursor-pointer mb-4">
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                     <div className="space-y-2 flex-1">
-                      <div className="flex items-center gap-2">
-                        <h2 className="text-lg sm:text-xl font-medium group-hover:text-muted-foreground transition-colors duration-300">
-                          {post.title}
-                        </h2>
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-all duration-300 group-hover:text-muted-foreground/50" />
-                      </div>
+                      <h2 className="text-lg sm:text-xl font-medium group-hover:text-muted-foreground transition-colors duration-300">
+                        {post.title}
+                        <ArrowRight className="inline-block ml-2 w-4 h-4 group-hover:translate-x-1 transition-all duration-300 group-hover:text-muted-foreground/50" />
+                      </h2>
                       <p className="text-muted-foreground leading-relaxed">{post.excerpt}</p>
                     </div>
 

@@ -1,0 +1,244 @@
+---
+title: "Vibe-Coded Apps Are Security Disasters Waiting to Happen"
+excerpt: "AI code generators like Lovable and Bolt are amazing for speed. However, they're leaving the door wide open for hackers. Here's what they miss and how to fix it."
+date: "2026-01-03"
+readTime: "8 min"
+---
+
+AI-powered development tools like Lovable, Bolt, and v0 have revolutionized how quickly we can ship apps. You can go from idea to deployed product in hours, not weeks. But there's a dark side no one talks about: **these vibe-coded apps are often security nightmares**.
+
+I've seen it firsthand. Apps built entirely through AI prompts, shipped to production, with API keys hardcoded in the frontend, zero input validation, and authorization checks that wouldn't stop a curious teenager with DevTools open.
+
+The consequences? **Data breaches. Leaked credentials. Thousands of dollars in liability. Lawsuits.**
+
+Let's talk about what these tools consistently miss and how to fix it before you become the next headline.
+
+## The Problem: Speed Over Security
+
+AI code generators optimize for *working code*, not *secure code*. They'll scaffold a beautiful UI, wire up your database, and deploy it all while leaving gaping security holes that any attacker could exploit in minutes.
+
+Here are the most common vulnerabilities I see in vibe-coded apps:
+
+### 1. **SQL Injection: The Classic Attack That Never Dies**
+
+AI tools love to concatenate user input directly into SQL queries. It's fast, it works, and it's a **critical security vulnerability**.
+
+**What it looks like:**
+
+```javascript
+const userId = req.params.id;
+const query = `SELECT * FROM users WHERE id = ${userId}`;
+```
+
+**Why it's dangerous:**
+An attacker can manipulate the `userId` parameter to execute arbitrary SQL commands deleting your database, stealing data, or worse.
+
+**How to fix it:**
+Use parameterized queries or prepared statements. Never concatenate user input into SQL strings.
+
+```javascript
+const query = 'SELECT * FROM users WHERE id = ?';
+db.query(query, [userId]);
+```
+
+**Prompt to use:**
+
+```
+Find anywhere I'm putting user input directly into database queries.
+Replace with parameterized queries or prepared statements.
+Never concatenate user input into SQL strings.
+```
+
+---
+
+### 2. **IDOR: When Your App Leaks Everyone's Data**
+
+Insecure Direct Object References (IDOR) happen when your app uses an ID from the URL to fetch data without checking if the user actually has permission to see it.
+
+**What it looks like:**
+
+```javascript
+app.get('/api/orders/:id', async (req, res) => {
+  const order = await db.getOrder(req.params.id);
+  res.json(order);
+});
+```
+
+**Why it's dangerous:**
+Any logged-in user can change the `:id` in the URL and access *anyone's* orders. No authorization check = free-for-all.
+
+**How to fix it:**
+Add authorization checks that verify the logged-in user actually owns or has permission to access that resource.
+
+```javascript
+app.get('/api/orders/:id', async (req, res) => {
+  const order = await db.getOrder(req.params.id);
+  if (order.userId !== req.user.id) {
+    return res.status(403).json({ error: 'Unauthorized' });
+  }
+  res.json(order);
+});
+```
+
+**Prompt to use:**
+
+```
+Find any endpoint that uses an ID from the URL or request to fetch data (like /api/users/:id or /api/orders/:id).
+Add authorization checks that verify the logged-in user actually owns or has permission to access that resource.
+Don't just check if they're logged in—check if this specific data belongs to them.
+```
+
+---
+
+### 3. **Missing Authorization on Protected Routes**
+
+AI tools often forget that **frontend security is not security**. Hiding an admin button doesn't stop someone from calling the API directly.
+
+**What it looks like:**
+
+```javascript
+app.delete('/api/users/:id', async (req, res) => {
+  await db.deleteUser(req.params.id);
+  res.json({ success: true });
+});
+```
+
+**Why it's dangerous:**
+Anyone can hit this endpoint and delete users. There's no role check, no permission validation—just vibes.
+
+**How to fix it:**
+Add middleware that checks the user's role/permissions on the backend before allowing access.
+
+```javascript
+app.delete('/api/users/:id', requireAdmin, async (req, res) => {
+  await db.deleteUser(req.params.id);
+  res.json({ success: true });
+});
+```
+
+**Prompt to use:**
+
+```
+Find all admin or sensitive endpoints (anything with /admin, delete operations, user management, etc.).
+Add middleware that checks the user's role/permissions on the backend before allowing access.
+Never rely on hiding buttons in the frontend as security—the backend must enforce permissions.
+```
+
+---
+
+### 4. **Hardcoded API Keys: A Hacker's Dream**
+
+I've seen production apps with API keys sitting right in the frontend JavaScript. Stripe keys, OpenAI keys, database credentials—all visible in the browser console.
+
+**What it looks like:**
+
+```javascript
+const apiKey = 'sk-proj-abcd1234...';
+fetch('https://api.openai.com/v1/chat', {
+  headers: { 'Authorization': `Bearer ${apiKey}` }
+});
+```
+
+**Why it's dangerous:**
+Anyone can open DevTools, grab your key, and rack up thousands of dollars in charges on your account.
+
+**How to fix it:**
+Move all sensitive keys to environment variables on the backend. Never expose them client-side.
+
+```javascript
+// Backend only
+const apiKey = process.env.OPENAI_API_KEY;
+```
+
+---
+
+### 5. **No Rate Limiting: Welcome to the DDoS Party**
+
+AI-generated apps rarely include rate limiting. This means attackers can spam your endpoints, brute-force passwords, or run up your API bills.
+
+**How to fix it:**
+Add rate limiting middleware to all public endpoints.
+
+```javascript
+const rateLimit = require('express-rate-limit');
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: 'Too many requests, please try again later.'
+});
+
+app.use('/api/', limiter);
+```
+
+---
+
+### 6. **Missing Input Validation: Garbage In, Chaos Out**
+
+AI tools assume your users will play nice. They won't.
+
+**How to fix it:**
+Use schema validation libraries like Zod or Joi to validate all user inputs.
+
+```javascript
+const { z } = require('zod');
+
+const userSchema = z.object({
+  email: z.string().email(),
+  age: z.number().min(18).max(120),
+  username: z.string().min(3).max(20)
+});
+
+app.post('/api/users', async (req, res) => {
+  const result = userSchema.safeParse(req.body);
+  if (!result.success) {
+    return res.status(400).json({ errors: result.error });
+  }
+  // proceed with validated data
+});
+```
+
+---
+
+## The Nuclear Option: A Single Prompt to Fix Everything
+
+If you want to harden your app in one shot, use this comprehensive security review prompt:
+
+```
+Review this app and harden its security. Add:
+
+1. Rate limiting on all public endpoints (IP + user-based, sensible defaults, graceful 429s).
+2. Strict input validation & sanitization on all user inputs (schema-based, type checks, length limits, reject unexpected fields).
+3. Secure API key handling (remove hard-coded keys, move to environment variables, rotate keys, ensure no keys are exposed client-side).
+4. Check for XSS (cross-site scripting) vulnerabilities and sanitize all user-generated content.
+5. Check for bad algorithmic complexity that could lead to DoS attacks.
+
+Follow OWASP best practices, include clear comments, and do not break existing functionality.
+```
+
+---
+
+## The Real Cost of Insecurity
+
+A single data breach can cost you:
+
+* **Legal fees**: Lawsuits from affected users
+* **Compliance fines**: GDPR violations start at €20 million or 4% of global revenue
+* **Reputational damage**: Users won't trust you again
+* **API bills**: Exposed keys can rack up thousands in unauthorized charges
+
+> Security isn't about being paranoid. It's about being responsible.
+
+---
+
+## Final Thoughts
+
+AI code generators are incredible tools. They've democratized app development and made shipping products faster than ever. But speed without security is a ticking time bomb.
+
+Before you deploy your next vibe-coded app, take 30 minutes to run these security checks. Your users—and your bank account—will thank you.
+
+**The best apps aren't just fast to build. They're safe to use.**
+
+---
+
+*Want to dive deeper? Check out the [OWASP Top 10](https://owasp.org/www-project-top-ten/) for a comprehensive guide to web application security.*

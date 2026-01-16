@@ -36,7 +36,7 @@ export default async function ThoughtPage({ params }: { params: Promise<{ slug: 
             <div className="flex items-center gap-3 text-sm text-muted-foreground font-mono">
               <span>{new Date(thought.meta.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
               <span>·</span>
-              <span>{thought.meta.readTime} read</span>
+              <span>{thought.meta.readTime}</span>
             </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-light leading-tight">
               {thought.meta.title}

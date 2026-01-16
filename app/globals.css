@@ -118,6 +118,13 @@
   body {
     @apply text-foreground;
   }
+  button,
+  [type='button'],
+  [type='submit'],
+  [type='reset'],
+  [role='button'] {
+    cursor: pointer;
+  }
   img {
     -webkit-user-drag: none;
     user-drag: none;
