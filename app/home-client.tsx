@@ -311,7 +311,7 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
                       <h3 className="text-lg sm:text-xl font-medium">{edu.degree}</h3>
                       {edu.minor && <div className="text-lg sm:text-xl font-medium">{edu.minor}</div>}
                       <div className="text-muted-foreground">{edu.school}</div>
-                      <div className="text-sm text-muted-foreground">{edu.year}</div>
+                      <div className="text-sm text-muted-foreground whitespace-nowrap">{edu.year}</div>
                     </div>
                     <p className="text-muted-foreground leading-relaxed max-w-lg">{edu.description}</p>
                     <div className="flex items-center gap-4 mt-3">
@@ -418,19 +418,19 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
         >
           <div className="space-y-12 sm:space-y-16">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col xs:flex-row xs:items-center gap-1 xs:gap-2">
                 <button
                   onClick={() => setExperienceTab("work")}
-                  className={`text-3xl sm:text-4xl font-light transition-colors duration-300 cursor-pointer ${
+                  className={`text-2xl xs:text-3xl sm:text-4xl font-light transition-colors duration-300 cursor-pointer ${
                     experienceTab === "work" ? "text-foreground" : "text-muted-foreground/50 hover:text-muted-foreground"
                   }`}
                 >
                   Work Experience
                 </button>
-                <span className="text-3xl sm:text-4xl font-light text-muted-foreground/30">|</span>
+                <span className="hidden xs:inline text-2xl xs:text-3xl sm:text-4xl font-light text-muted-foreground/30">|</span>
                 <button
                   onClick={() => setExperienceTab("extracurriculars")}
-                  className={`text-3xl sm:text-4xl font-light transition-colors duration-300 cursor-pointer ${
+                  className={`text-2xl xs:text-3xl sm:text-4xl font-light transition-colors duration-300 cursor-pointer ${
                     experienceTab === "extracurriculars" ? "text-foreground" : "text-muted-foreground/50 hover:text-muted-foreground"
                   }`}
                 >
@@ -460,7 +460,7 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
                           <div className="space-y-0.5">
                             <h3 className="text-lg sm:text-xl font-medium">{job.role}</h3>
                             <div className="text-muted-foreground">{job.company}</div>
-                            <div className="text-sm text-muted-foreground">{job.year}</div>
+                            <div className="text-sm text-muted-foreground whitespace-nowrap">{job.year}</div>
                           </div>
 
                           <div className="flex flex-wrap gap-x-2 gap-y-1 justify-end max-w-48 sm:max-w-54 lg:max-w-70 shrink-0">
@@ -548,6 +548,26 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
                       </div>
                     </div>
                   ))}
+                  <Button
+                    variant="ghost"
+                    className="mt-8 gap-2 text-lg"
+                    onClick={() => setExperienceTab("extracurriculars")}
+                  >
+                    View Extracurriculars
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </Button>
                 </>
               ) : (
                 <>
@@ -618,7 +638,7 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
                               <div className="flex items-start justify-between gap-4">
                                 <div className="space-y-0.5">
                                   <h3 className="text-lg sm:text-xl font-medium">{item.role}</h3>
-                                  <div className="text-sm text-muted-foreground">{item.year}</div>
+                                  <div className="text-sm text-muted-foreground whitespace-nowrap">{item.year}</div>
                                 </div>
 
                                 <div className="flex flex-wrap gap-x-2 gap-y-1 justify-end max-w-48 sm:max-w-54 lg:max-w-70 shrink-0">
@@ -660,6 +680,26 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
                       </div>
                     </div>
                   ))}
+                  <Button
+                    variant="ghost"
+                    className="mt-8 gap-2 text-lg"
+                    onClick={() => setExperienceTab("work")}
+                  >
+                    View Work Experience
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </Button>
                 </>
               )}
             </div>
