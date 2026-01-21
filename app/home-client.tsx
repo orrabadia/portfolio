@@ -204,7 +204,7 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
           ref={(el) => { sectionsRef.current[0] = el }}
           className="min-h-screen flex items-center opacity-0"
         >
-          <div className="grid lg:grid-cols-5 gap-12 sm:gap-16 w-full">
+          <div className="grid lg:grid-cols-5 gap-2 sm:gap-16 w-full">
             <div className="lg:col-span-3 space-y-6 sm:space-y-8">
               <div className="space-y-3 sm:space-y-2">
                 <div className="text-sm text-muted-foreground font-mono tracking-wider mt-8 sm:mt-0">PORTFOLIO / 2026</div>
@@ -282,8 +282,8 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
           </div>
         </header>
 
-        <section id="education" ref={(el) => { sectionsRef.current[1] = el }} className="py-20 sm:py-24 opacity-0">
-          <div className="space-y-12 sm:space-y-16">
+        <section id="education" ref={(el) => { sectionsRef.current[1] = el }} className="py-12 sm:py-16 opacity-0">
+          <div className="space-y-6 sm:space-y-8">
             <h2 className="text-3xl sm:text-4xl font-light">Education</h2>
 
             <div className="space-y-8 sm:space-y-12">
@@ -302,7 +302,7 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
               ].map((edu, index) => (
                 <div
                   key={index}
-                  className="group flex gap-4 sm:gap-6 py-6 sm:py-8 border-b border-border/50 hover:border-border transition-colors duration-500"
+                  className="group flex gap-4 sm:gap-6 py-6 sm:py-8 transition-colors duration-500"
                 >
                   <img src="/UCSD.png" alt="UCSD" className="w-14 h-14 object-contain shrink-0" />
 
@@ -337,8 +337,8 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
           </div>
         </section>
 
-        <section id="skills" ref={(el) => { sectionsRef.current[2] = el }} className="py-20 sm:py-24 opacity-0">
-          <div className="space-y-12 sm:space-y-16">
+        <section id="skills" ref={(el) => { sectionsRef.current[2] = el }} className="py-12 sm:py-16 opacity-0">
+          <div className="space-y-6 sm:space-y-8">
             <h2 className="text-3xl sm:text-4xl font-light">Skills</h2>
 
             <div className="grid gap-8 sm:gap-10">
@@ -414,9 +414,9 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
         <section
           id="work"
           ref={(el) => { sectionsRef.current[3] = el }}
-          className="min-h-screen py-20 sm:py-24 opacity-0"
+          className="min-h-screen py-12 sm:py-16 opacity-0"
         >
-          <div className="space-y-12 sm:space-y-16">
+          <div className="space-y-6 sm:space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
               <div className="flex flex-col xs:flex-row xs:items-center gap-1 xs:gap-2">
                 <button
@@ -447,7 +447,7 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
                       key={index}
                       className="group flex gap-4 sm:gap-6 py-6 sm:py-8 border-b border-border/50 hover:border-border transition-colors duration-500"
                     >
-                      <div className={`flex items-center justify-center overflow-hidden shrink-0 ${job.company === "Pullscription" ? "w-16 h-16" : "w-12 h-12 sm:w-14 sm:h-14"}`}>
+                      <div className="w-16 h-16 flex items-center justify-center overflow-hidden shrink-0">
                         <img
                           src={job.logo}
                           alt={job.company}
@@ -457,17 +457,17 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
 
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-4">
-                          <div className="space-y-0.5">
-                            <h3 className="text-lg sm:text-xl font-medium">{job.role}</h3>
+                          <div className="space-y-0.5 shrink-0">
+                            <h3 className="text-lg sm:text-xl font-medium text-wrap w-[175px] sm:w-[200px] md:w-auto md:max-w-[400px]">{job.role}</h3>
                             <div className="text-muted-foreground">{job.company}</div>
                             <div className="text-sm text-muted-foreground whitespace-nowrap">{job.year}</div>
                           </div>
 
-                          <div className="flex flex-wrap gap-x-2 gap-y-1 justify-end max-w-48 sm:max-w-54 lg:max-w-70 shrink-0">
+                          <div className="flex flex-wrap justify-end gap-x-3 gap-y-1 max-w-[200px] lg:max-w-[280px]">
                             {job.tech.map((tech) => (
                               <span
                                 key={tech}
-                                className="text-xs text-muted-foreground leading-tight"
+                                className="text-xs text-muted-foreground leading-tight text-right"
                               >
                                 {tech}
                               </span>
@@ -550,12 +550,12 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
                   ))}
                   <Button
                     variant="ghost"
-                    className="mt-8 gap-2 text-lg"
+                    className="group mt-8 gap-2 text-lg"
                     onClick={() => setExperienceTab("extracurriculars")}
                   >
                     View Extracurriculars
                     <svg
-                      className="w-4 h-4"
+                      className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -636,12 +636,12 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
                           {org.roles.map((item, roleIndex) => (
                             <div key={roleIndex}>
                               <div className="flex items-start justify-between gap-4">
-                                <div className="space-y-0.5">
+                                <div className="space-y-0.5 shrink-0">
                                   <h3 className="text-lg sm:text-xl font-medium">{item.role}</h3>
                                   <div className="text-sm text-muted-foreground whitespace-nowrap">{item.year}</div>
                                 </div>
 
-                                <div className="flex flex-wrap gap-x-2 gap-y-1 justify-end max-w-48 sm:max-w-54 lg:max-w-70 shrink-0">
+                                <div className="flex flex-wrap justify-end gap-x-3 gap-y-1 max-w-[200px] lg:max-w-[280px]">
                                   {item.tags.map((tag) => (
                                     <span
                                       key={tag}
@@ -682,12 +682,12 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
                   ))}
                   <Button
                     variant="ghost"
-                    className="mt-8 gap-2 text-lg"
+                    className="group mt-8 gap-2 text-lg"
                     onClick={() => setExperienceTab("work")}
                   >
                     View Work Experience
                     <svg
-                      className="w-4 h-4"
+                      className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -709,9 +709,9 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
         <section
           id="thoughts"
           ref={(el) => { sectionsRef.current[4] = el }}
-          className="py-20 sm:py-24 opacity-0"
+          className="py-12 sm:py-16 opacity-0"
         >
-          <div className="space-y-12 sm:space-y-16">
+          <div className="space-y-6 sm:space-y-8">
             <div className="flex items-center justify-between">
               <h2 className="text-3xl sm:text-4xl font-light">Recent Thoughts</h2>
               <Link
@@ -775,7 +775,7 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
           </div>
         </section>
 
-        <section id="connect" ref={(el) => { sectionsRef.current[5] = el }} className="py-20 sm:py-24 opacity-0">
+        <section id="connect" ref={(el) => { sectionsRef.current[5] = el }} className="py-12 sm:py-16 opacity-0">
           <div className="grid lg:grid-cols-2 gap-12 sm:gap-16">
             <div className="space-y-6 sm:space-y-8">
               <h2 className="text-3xl sm:text-4xl font-light">Let's Connect</h2>
