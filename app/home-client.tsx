@@ -127,7 +127,7 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
   const jobExperiences: JobExperience[] = [
     {
       year: "July 2025 - Present",
-      role: "Software Engineer",
+      role: "Founding Software Engineer",
       company: "ServiceAgent",
       logo: "/logos/companies/ServiceAgent.png",
       description: "Building AI-powered customer service automation tools and designing user-centric product interfaces.",
@@ -243,7 +243,7 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
               <div className="space-y-4">
                 <div className="text-sm text-muted-foreground font-mono">CURRENTLY</div>
                 <div className="space-y-2">
-                  <div className="text-foreground">Software Engineer</div>
+                  <div className="text-foreground">Founding Software Engineer</div>
                   <div className="text-muted-foreground">@ ServiceAgent</div>
                   <div className="text-xs text-muted-foreground">July 2025 — Present</div>
                 </div>
