@@ -10,7 +10,10 @@ import {
   SiPython, SiJavascript, SiTypescript, SiCplusplus, SiHtml5, SiCss3, SiGnubash,
   SiReact, SiNextdotjs, SiVuedotjs, SiNuxtdotjs, SiNodedotjs, SiExpress, SiTailwindcss, SiFastapi,
   SiMongodb, SiPostgresql, SiSupabase,
-  SiGit, SiDocker, SiGithubactions, SiAuth0, SiStripe, SiHubspot, SiAirtable, SiOpenai
+  SiGit, SiDocker, SiGithubactions, SiAuth0, SiStripe, SiHubspot, SiAirtable, SiOpenai,
+  SiJunit5,
+  SiC,
+  SiVitest
 } from "react-icons/si"
 import { FaJava, FaDatabase } from "react-icons/fa"
 import type { ThoughtMeta } from "@/lib/thoughts"
@@ -391,6 +394,16 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
                     { name: "OpenAI APIs", icon: SiOpenai },
                   ],
                 },
+                {
+                  category: "Debugging & Testing Tools",
+                  skills: [
+                    { name: "Vitest", icon: SiVitest },
+                    { name: "JUnit", icon: SiJunit5 },
+                    { name: "gdb", icon: SiCplusplus },
+                    { name: "Valgrind", icon: SiCplusplus },
+                  ],
+                },
+
               ].map((group) => (
                 <div key={group.category} className="space-y-3">
                   <div className="text-sm text-muted-foreground font-mono">{group.category.toUpperCase()}</div>
