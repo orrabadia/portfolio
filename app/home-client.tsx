@@ -469,18 +469,18 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
                       </div>
 
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="space-y-0.5 shrink-0">
-                            <h3 className="text-lg sm:text-xl font-medium text-wrap w-[175px] sm:w-[200px] md:w-auto md:max-w-[400px]">{job.role}</h3>
+                        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 md:gap-4 mb-0.5 md:mb-0">
+                          <div className="space-y-0.5">
+                            <h3 className="text-lg sm:text-xl font-medium">{job.role}</h3>
                             <div className="text-muted-foreground">{job.company}</div>
                             <div className="text-sm text-muted-foreground whitespace-nowrap">{job.year}</div>
                           </div>
 
-                          <div className="flex flex-wrap justify-end gap-x-3 gap-y-1 max-w-[200px] lg:max-w-[280px]">
+                          <div className="flex flex-wrap gap-x-3 gap-y-2 md:justify-end md:max-w-[280px] mt-1 md:mt-0">
                             {job.tech.map((tech) => (
                               <span
                                 key={tech}
-                                className="text-xs text-muted-foreground leading-tight text-right"
+                                className="text-xs text-muted-foreground leading-tight"
                               >
                                 {tech}
                               </span>
@@ -648,13 +648,13 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
                         <div className="space-y-6">
                           {org.roles.map((item, roleIndex) => (
                             <div key={roleIndex}>
-                              <div className="flex items-start justify-between gap-4">
-                                <div className="space-y-0.5 shrink-0">
+                              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 md:gap-4">
+                                <div className="space-y-0.5">
                                   <h3 className="text-lg sm:text-xl font-medium">{item.role}</h3>
                                   <div className="text-sm text-muted-foreground whitespace-nowrap">{item.year}</div>
                                 </div>
 
-                                <div className="flex flex-wrap justify-end gap-x-3 gap-y-1 max-w-[200px] lg:max-w-[280px]">
+                                <div className="flex flex-wrap gap-x-3 gap-y-1 md:justify-end md:max-w-[280px]">
                                   {item.tags.map((tag) => (
                                     <span
                                       key={tag}
