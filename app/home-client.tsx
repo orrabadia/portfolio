@@ -430,7 +430,7 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
           className="min-h-screen py-12 sm:py-16 opacity-0"
         >
           <div className="space-y-6 sm:space-y-8">
-            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+            <div id="experience-tabs" className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
               <div className="flex flex-col xs:flex-row xs:items-center gap-1 xs:gap-2">
                 <button
                   onClick={() => setExperienceTab("work")}
@@ -564,7 +564,10 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
                   <Button
                     variant="ghost"
                     className="group mt-8 gap-2 text-lg"
-                    onClick={() => setExperienceTab("extracurriculars")}
+                    onClick={() => {
+                      setExperienceTab("extracurriculars")
+                      document.getElementById("experience-tabs")?.scrollIntoView({ behavior: "smooth" })
+                    }}
                   >
                     View Extracurriculars
                     <svg
@@ -696,7 +699,10 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
                   <Button
                     variant="ghost"
                     className="group mt-8 gap-2 text-lg"
-                    onClick={() => setExperienceTab("work")}
+                    onClick={() => {
+                      setExperienceTab("work")
+                      document.getElementById("experience-tabs")?.scrollIntoView({ behavior: "smooth" })
+                    }}
                   >
                     View Work Experience
                     <svg
@@ -822,12 +828,14 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
-                  { name: "GitHub", handle: "@orrabadia", url: "#", icon: Github },
-                  { name: "LinkedIn", handle: "omrabadia", url: "#", icon: Linkedin },
+                  { name: "GitHub", handle: "@orrabadia", url: "https://github.com/orrabadia", icon: Github },
+                  { name: "LinkedIn", handle: "omrabadia", url: "https://linkedin.com/in/omrabadia", icon: Linkedin },
                 ].map((social) => (
                   <Link
                     key={social.name}
                     href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="group p-4 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-300 hover:shadow-sm"
                   >
                     <div className="flex items-center gap-3">
