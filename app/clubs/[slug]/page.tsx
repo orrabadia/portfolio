@@ -83,7 +83,7 @@ export default function ClubPage({ params }: { params: Promise<{ slug: string }>
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen text-foreground">
       {expandedImage && (
         <div
           className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center cursor-pointer p-4 sm:p-8"
@@ -113,15 +113,15 @@ export default function ClubPage({ params }: { params: Promise<{ slug: string }>
       <main className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-16 py-12 sm:py-20">
         <Link
           href="/education"
-          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors duration-300 mb-12"
+          className="group inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors duration-300 mb-12"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" />
           Back to Portfolio
         </Link>
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
           <div className="grid grid-cols-2 gap-4">
-            <div className="w-full aspect-square flex items-center justify-center bg-card border border-border rounded-full p-6">
+            <div className="w-full aspect-square flex items-center justify-center border-4 border-border rounded-full p-6">
               <img
                 src={club.logo}
                 alt={club.name}

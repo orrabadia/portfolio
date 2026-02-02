@@ -10,9 +10,9 @@ export default function ThoughtsPage() {
       <main className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-16 py-12 sm:py-20">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors duration-300 mb-12"
+          className="group inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors duration-300 mb-12"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" />
           Back to Portfolio
         </Link>
 

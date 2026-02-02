@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import { Geist } from "next/font/google"
 import { ThemeProvider } from "next-themes"
 import "./globals.css"
-import Pattern from "@/components/ui/background"
+import DitherBackground from "@/components/dither-background"
 
 const geist = Geist({
   subsets: ["latin"],
@@ -13,7 +13,7 @@ const geist = Geist({
 
 export const metadata: Metadata = {
   title: "Om Rabadia - Full-Stack Developer",
-  description: "Portfolio of Om Rabadia, a full-stack developer specializing in building scalable web applications and engaging user experiences.",
+  description: "Portfolio of Om Rabadia, a Full-Stack Software Engineer who builds scalable, real-world products from idea to production.",
   icons: {
     icon: [
       { url: "/favicon.ico" },
@@ -36,7 +36,10 @@ export default function RootLayout({
     <html lang="en" className={`${geist.variable}`} suppressHydrationWarning>
       <body className="font-sans antialiased" suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          {children}
+          <DitherBackground />
+          <div className="relative z-10">
+            {children}
+          </div>
         </ThemeProvider>
       </body>
     </html>

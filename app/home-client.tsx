@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import { useTheme } from "next-themes"
-import { MapPin, Github, Linkedin, Maximize2, X } from "lucide-react"
+import { MapPin, Github, Linkedin, Maximize2, X, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   SiPython, SiJavascript, SiTypescript, SiCplusplus, SiHtml5, SiCss3, SiGnubash,
@@ -24,6 +24,7 @@ import {
   DialogTitle,
   DialogClose,
 } from "@/components/ui/dialog"
+import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
 
 const sections = ["intro", "education", "skills", "work", "thoughts", "connect"]
 
@@ -130,7 +131,7 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
       role: "Founding Software Engineer",
       company: "ServiceAgent",
       logo: "/logos/companies/ServiceAgent.png",
-      description: "Building AI-powered customer service automation tools and designing user-centric product interfaces.",
+      description: "Building AI-powered workflow automation tools and designing user-centric product interfaces.",
       tech: ["React", "TypeScript", "PostgreSQL", "Tailwind CSS", "Node.js (Express)", "n8n", "Stripe", "Hubspot API", "Airtable"],
       workSamples: [
         {
@@ -185,18 +186,29 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
   ]
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative">
+    <div className="min-h-screen text-foreground relative">
       <nav className="fixed left-8 top-1/2 -translate-y-1/2 z-10 hidden lg:block">
         <div className="flex flex-col gap-4">
           {sections.map((section) => (
-            <button
-              key={section}
-              onClick={() => document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })}
-              className={`w-2 h-8 rounded-full transition-all duration-500 cursor-pointer ${
-                activeSection === section ? "bg-foreground" : "bg-muted-foreground/30 hover:bg-muted-foreground/60"
-              }`}
-              aria-label={`Navigate to ${section}`}
-            />
+            <Tooltip key={section}>
+              <TooltipTrigger asChild>
+                <button
+                  onClick={() => document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })}
+                  className={`w-2 h-8 rounded-full transition-all duration-500 cursor-pointer ${
+                    activeSection === section ? "bg-foreground" : "bg-muted-foreground/30 hover:bg-muted-foreground/60"
+                  }`}
+                  aria-label={`Navigate to ${section}`}
+                />
+              </TooltipTrigger>
+              <TooltipContent
+                side="right"
+                className="bg-background/80 backdrop-blur-sm text-foreground border border-border cursor-pointer"
+                arrowClassName="bg-background/80 fill-background/80 border-r border-b border-border"
+                onClick={() => document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })}
+              >
+                {section.charAt(0).toUpperCase() + section.slice(1)}
+              </TooltipContent>
+            </Tooltip>
           ))}
         </div>
       </nav>
@@ -225,8 +237,9 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
               </div>
 
               <div className="space-y-6 max-w-md">
-                <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
-                  Developer and designer building <span className="text-foreground">intuitive</span> web experiences that make technology more <span className="text-foreground">accessible</span> and <span className="text-foreground"> impactful</span> for everyone.
+                <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed hyphens-none">
+                  <span className="text-foreground">Full-Stack Software Engineer</span> with an <span className="text-foreground">eye for design,</span> building <span className="text-foreground">scalable,</span> <span className="whitespace-nowrap"><span className="text-foreground">real-world</span> products</span> from idea to production.
+
                 </p>
 
                 <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 text-sm text-muted-foreground">
@@ -246,6 +259,7 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
                   <div className="text-foreground">Founding Software Engineer</div>
                   <div className="text-muted-foreground">@ ServiceAgent</div>
                   <div className="text-xs text-muted-foreground">July 2025 — Present</div>
+                  <div className="text-sm text-muted-foreground mt-1">Building production AI systems and automation workflows for customers across multiple industries.</div>
                 </div>
               </div>
 
@@ -278,7 +292,7 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
                       d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                     />
                   </svg>
-                  Download Resume
+                  View My Resume
                 </Button>
               </a>
             </div>
@@ -296,10 +310,10 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
                   degree: "B.S. Computer Science with a Specialization in Bioinformatics",
                   minor: "Minor in Economics",
                   school: "University of California, San Diego",
-                  description: "Focusing on software engineering, algorithms, and human-computer interaction.",
+                  description: "Studied bioinformatics, but focused my work on software engineering, algorithms, and inspiring underserved K-12 students to pursue STEM.",
                   clubs: [
                     { src: "/logos/clubs/HKN.png", alt: "HKN", className: "", slug: "hkn" },
-                    { src: "/logos/clubs/csforeach.svg", alt: "CS Foreach", className: "csforeach-logo", slug: "csforeach" },
+                    { src: "/logos/clubs/csforeach.svg", alt: "CS foreach", className: "csforeach-logo", slug: "csforeach" },
                   ],
                 },
               ].map((edu, index) => (
@@ -319,18 +333,27 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
                     <p className="text-muted-foreground leading-relaxed max-w-lg">{edu.description}</p>
                     <div className="flex items-center gap-4 mt-3">
                       {edu.clubs.map((club) => (
-                        <Link
-                          key={club.alt}
-                          href={`/clubs/${club.slug}`}
-                          className="hover:scale-110 transition-transform duration-300"
-                          title={`My involvement in ${club.alt}`}
-                        >
-                          <img
-                            src={club.src}
-                            alt={club.alt}
-                            className={`h-10 w-auto object-contain ${club.className}`}
-                          />
-                        </Link>
+                        <Tooltip key={club.alt}>
+                          <TooltipTrigger asChild>
+                            <Link
+                              href={`/clubs/${club.slug}`}
+                              className="hover:scale-110 transition-transform duration-300"
+                            >
+                              <img
+                                src={club.src}
+                                alt={club.alt}
+                                className={`h-10 w-auto object-contain ${club.className}`}
+                              />
+                            </Link>
+                          </TooltipTrigger>
+                          <TooltipContent
+                            side="bottom"
+                            className="bg-background/80 backdrop-blur-sm text-foreground border border-border"
+                            arrowClassName="bg-background/80 fill-background/80 border-b border-r border-border"
+                          >
+                            My involvement in {club.alt}
+                          </TooltipContent>
+                        </Tooltip>
                       ))}
                     </div>
                   </div>
@@ -427,7 +450,7 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
         <section
           id="work"
           ref={(el) => { sectionsRef.current[3] = el }}
-          className="min-h-screen py-12 sm:py-16 opacity-0"
+          className="py-12 sm:py-16 opacity-0"
         >
           <div className="space-y-6 sm:space-y-8">
             <div id="experience-tabs" className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
@@ -570,19 +593,7 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
                     }}
                   >
                     View Extracurriculars
-                    <svg
-                      className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                      />
-                    </svg>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                   </Button>
                 </>
               ) : (
@@ -677,19 +688,7 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
                           >
                             <Button variant={theme === "dark" ? "secondary" : "secondary"}>
                             Learn more about my involvement
-                            <svg
-                              className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M17 8l4 4m0 0l-4 4m4-4H3"
-                              />
-                            </svg>
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                             </Button>
                           </Link>
                         </div>
@@ -705,19 +704,7 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
                     }}
                   >
                     View Work Experience
-                    <svg
-                      className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                      />
-                    </svg>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                   </Button>
                 </>
               )}
@@ -738,19 +725,7 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
                 className="group flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
               >
                 View all
-                <svg
-                  className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
-                </svg>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
               </Link>
             </div>
 
@@ -772,19 +747,7 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
 
                       <div className="flex items-center gap-2 text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-300">
                         <span>Read more</span>
-                        <svg
-                          className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M17 8l4 4m0 0l-4 4m4-4H3"
-                          />
-                        </svg>
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                       </div>
                     </div>
                   </article>
@@ -810,14 +773,7 @@ export default function HomeClient({ thoughts }: HomeClientProps) {
                     className="group flex items-center gap-3 text-foreground hover:text-muted-foreground transition-colors duration-300"
                   >
                     <span className="text-base sm:text-lg">orrabadia@gmail.com</span>
-                    <svg
-                      className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
                   </Link>
                 </div>
               </div>
